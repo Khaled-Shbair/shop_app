@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:shop_app/shared%20preferences/pref%20controller.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../../constants/string.dart';
 import '../../widgets/on boarding widget.dart';
-
 
 class OnBoardingScreen extends StatefulWidget {
   const OnBoardingScreen({Key? key}) : super(key: key);
@@ -32,24 +32,28 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar:
-          AppBar(backgroundColor: Colors.transparent, elevation: 0, actions: [
-        Visibility(
-          visible: page == 2,
-          child: TextButton(
-            onPressed: () {
-              Navigator.pushReplacementNamed(context, loginScreen);
-            },
-            child: const Text(
-              'Next',
-              style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold),
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        actions: [
+          Visibility(
+            visible: page == 2,
+            child: TextButton(
+              onPressed: () async {
+                PrefController().saveOnBoarding(value: true);
+                Navigator.pushReplacementNamed(context, loginScreen);
+              },
+              child: const Text(
+                'Next',
+                style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold),
+              ),
             ),
           ),
-        ),
-      ]),
+        ],
+      ),
       body: Column(
         children: [
           Expanded(

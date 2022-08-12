@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../api/api paths.dart';
-import '../../api/controller.dart';
-import '../../api/dio.dart';
-import '../../api/response.dart';
+import '../../api/api controller.dart';
+import '../../api/api response.dart';
 import '../../constants/string.dart';
 import '../../utils/helpers.dart';
 import '../../widgets/input filed.dart';
@@ -170,17 +168,24 @@ class _LoginScreenState extends State<LoginScreen> with helpers {
         _emailController.text.isNotEmpty) {
       return true;
     }
-    showSnackBar(context, message: 'Enter required data!', error: false);
+    showSnackBar(message: 'Enter required data!', error: false);
     return false;
   }
 
   Future<void> _login() async {
-    Controller().login(
-      context,
-      mainScreen,
+    ApiResponse apiResponse = await ApiController().login(
       email: _emailController.text,
       password: _passwordController.text,
     );
+
+    showSnackBar(message: apiResponse.message, error: !apiResponse.status);
+    if (apiResponse.status) {
+      navigator();
+    }
+  }
+
+  void navigator() {
+    Navigator.pushReplacementNamed(context, mainScreen);
   }
 }
 /*
