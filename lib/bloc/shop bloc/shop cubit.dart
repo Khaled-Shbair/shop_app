@@ -8,6 +8,7 @@ import 'package:shop_app/screens/favorites/favorites%20screen.dart';
 import 'package:shop_app/screens/products/products%20screen.dart';
 import 'package:shop_app/screens/settings/settings%20screen.dart';
 
+import '../../models/category.dart';
 import '../../models/home model.dart';
 import '../../shared preferences/pref controller.dart';
 
@@ -17,6 +18,7 @@ class ShopCubit extends Cubit<ShopState> {
   ShopCubit get(context) => BlocProvider.of(context);
   int currentIndex = 0;
   late HomeModel homeModel;
+  late Category category;
   final List<Widget> bottomScreen = const [
     ProductsScreen(),
     CategoriesScreen(),
@@ -38,6 +40,20 @@ class ShopCubit extends Cubit<ShopState> {
       emit(ShopSuccessState());
     }).catchError((error) {
       emit(ShopErrorState());
+    });
+  }
+
+  void getCategoryData() {
+    emit(ShopLoadingState());
+    DioHelper.getData(
+            url: ApiPaths.categories,
+            token: PrefController().token,
+            query: null)
+        .then((value) {
+      category = Category.fromJson(value.data);
+      emit(CategoriesSuccessState());
+    }).catchError((error) {
+      emit(CategoriesErrorState());
     });
   }
 }

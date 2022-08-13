@@ -8,8 +8,8 @@ class ShopLoadingState extends ShopState {}
 
 class ShopSuccessState extends ShopState {}
 
-class ShopErrorState extends ShopState {
-  // final String message;
+class ShopErrorState extends ShopState {}
 
-  // ShopErrorState({required this.message});
-}
+class CategoriesSuccessState extends ShopState {}
+
+class CategoriesErrorState extends ShopState {}
