@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shop_app/shared%20preferences/pref%20controller.dart';
 import '../../api/api controller.dart';
 import '../../api/api response.dart';
 import '../../constants/string.dart';
@@ -168,7 +169,7 @@ class _LoginScreenState extends State<LoginScreen> with helpers {
         _emailController.text.isNotEmpty) {
       return true;
     }
-    showSnackBar(message: 'Enter required data!', error: false);
+    showSnackBar(message: 'Enter required data!', error: true);
     return false;
   }
 
@@ -177,7 +178,6 @@ class _LoginScreenState extends State<LoginScreen> with helpers {
       email: _emailController.text,
       password: _passwordController.text,
     );
-
     showSnackBar(message: apiResponse.message, error: !apiResponse.status);
     if (apiResponse.status) {
       navigator();
@@ -185,7 +185,7 @@ class _LoginScreenState extends State<LoginScreen> with helpers {
   }
 
   void navigator() {
-    Navigator.pushReplacementNamed(context, mainScreen);
+    Navigator.pushReplacementNamed(context, shopLayout);
   }
 }
 /*

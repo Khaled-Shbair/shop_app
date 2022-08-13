@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../api/api paths.dart';
-import '../api/dio helper.dart';
+import '../../api/api paths.dart';
+import '../../api/dio helper.dart';
 import 'login state.dart';
 
 class LoginCubit extends Cubit<LoginState> {

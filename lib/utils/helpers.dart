@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 mixin helpers {
-  void showSnackBar({required String message, bool error = false}) {
+  void showSnackBar({required String message, required bool error}) {
     Fluttertoast.showToast(
       msg: message,
       toastLength: Toast.LENGTH_LONG,
