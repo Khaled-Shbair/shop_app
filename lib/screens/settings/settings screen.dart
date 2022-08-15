@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shop_app/api/api%20response.dart';
+import 'package:shop_app/api/auth%20api%20controller.dart';
+import 'package:shop_app/constants/string.dart';
+import 'package:shop_app/utils/helpers.dart';
 import '../../bloc/shop bloc/setting get.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -9,7 +13,7 @@ class SettingsScreen extends StatefulWidget {
   State<SettingsScreen> createState() => _SettingsScreenState();
 }
 
-class _SettingsScreenState extends State<SettingsScreen> {
+class _SettingsScreenState extends State<SettingsScreen> with helpers {
   late TextEditingController _nameController;
   late TextEditingController _emailController;
   late TextEditingController _phoneController;
@@ -33,7 +37,24 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(child: Text('Setting'));
+    return Center(
+      child: ElevatedButton(
+        onPressed: () => _logout,
+        child: const Text('LOGOUT'),
+      ),
+    );
+  }
+
+  Future<void> _logout() async {
+    ApiResponse apiResponse = await AuthApiController.to.logout();
+    if (apiResponse.status) {
+      showSnackBar(message: apiResponse.message, error: apiResponse.status);
+      navigator();
+    }
+  }
+
+  void navigator() {
+    Navigator.pushReplacementNamed(context, loginScreen);
   }
 }
 

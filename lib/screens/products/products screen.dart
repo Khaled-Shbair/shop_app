@@ -1,8 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shop_app/bloc/shop%20bloc/shop%20cubit.dart';
-import 'package:shop_app/bloc/shop%20bloc/shop%20states.dart';
+import 'package:get/get.dart';
+import 'package:shop_app/bloc/shop%20bloc/shop%20get.dart';
 
 class ProductsScreen extends StatefulWidget {
   const ProductsScreen({Key? key}) : super(key: key);
@@ -12,20 +11,21 @@ class ProductsScreen extends StatefulWidget {
 }
 
 class _ProductsScreenState extends State<ProductsScreen> {
+  ShopGet shopGet = Get.put(ShopGet());
+
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<ShopCubit, ShopState>(
-      listener: (context, state) {},
-      builder: (context, state) {
-        if (state is ShopLoadingState) {
+    return GetX<ShopGet>(
+      global: true,
+      builder: (controller) {
+        if (controller.loading.isTrue) {
           return const Center(child: CircularProgressIndicator());
         }
-        var cubit = ShopCubit().get(context);
         return Scaffold(
           body: ListView(
             children: [
               CarouselSlider(
-                items: cubit.homeModel.data.banners.map((e) {
+                items: controller.homeModel.data.banners.map((e) {
                   return Image(
                     image: NetworkImage(e.image),
                     width: double.infinity,
@@ -66,7 +66,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
                           alignment: AlignmentDirectional.bottomCenter,
                           children: [
                             Image(
-                              image: NetworkImage(cubit
+                              image: NetworkImage(controller
                                   .category.dataCategory.data[index].image),
                               height: 100,
                               width: 100,
@@ -75,7 +75,8 @@ class _ProductsScreenState extends State<ProductsScreen> {
                               color: Colors.black.withOpacity(.8),
                               width: 100,
                               child: Text(
-                                cubit.category.dataCategory.data[index].name,
+                                controller
+                                    .category.dataCategory.data[index].name,
                                 overflow: TextOverflow.ellipsis,
                                 textAlign: TextAlign.center,
                                 maxLines: 1,
@@ -89,7 +90,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
                       },
                       separatorBuilder: (context, index) =>
                           const SizedBox(width: 10),
-                      itemCount: cubit.category.dataCategory.data.length,
+                      itemCount: controller.category.dataCategory.data.length,
                     ),
                   ),
                   const SizedBox(height: 10),
@@ -97,9 +98,9 @@ class _ProductsScreenState extends State<ProductsScreen> {
                     'New Products',
                     style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                   ),
+                  listProduct(controller),
                 ],
               ),
-              listProduct(cubit),
             ],
           ),
         );
@@ -107,31 +108,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
     );
   }
 
-  Widget listCategory(ShopCubit cubit, int index) {
-    return Stack(
-      alignment: AlignmentDirectional.bottomCenter,
-      children: [
-        Image(
-          image: NetworkImage(cubit.category.dataCategory.data[index].image),
-          height: 100,
-          width: 100,
-        ),
-        Container(
-          color: Colors.black.withOpacity(.8),
-          width: 100,
-          child: const Text(
-            'Container',
-            overflow: TextOverflow.ellipsis,
-            textAlign: TextAlign.center,
-            maxLines: 1,
-            style: TextStyle(color: Colors.white),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget listProduct(ShopCubit cubit) {
+  Widget listProduct(ShopGet cubit) {
     return GridView.builder(
       padding: const EdgeInsetsDirectional.only(start: 10, end: 10),
       shrinkWrap: true,

@@ -4,7 +4,6 @@ import '../../api/api paths.dart';
 import '../../api/dio helper.dart';
 import '../../models/category.dart';
 import '../../models/home model.dart';
-import '../../models/login model.dart';
 import '../../screens/categories/categories screen.dart';
 import '../../screens/favorites/favorites screen.dart';
 import '../../screens/products/products screen.dart';
@@ -15,10 +14,9 @@ class ShopGet extends GetxController {
   static ShopGet get to => Get.find();
   RxBool loading = false.obs;
   RxInt currentIndex = 0.obs;
+  final RxMap<int, bool> listFavorites = <int, bool>{}.obs;
   late HomeModel homeModel;
   late Category category;
-  final Map<int, bool> listFavorites = {};
-
   final RxList<Widget> bottomScreen = const [
     ProductsScreen(),
     CategoriesScreen(),
@@ -26,12 +24,6 @@ class ShopGet extends GetxController {
     SettingsScreen(),
   ].obs;
 
-  @override
-  void onInit() {
-    getHomeData();
-    getCategoryData();
-    super.onInit();
-  }
 
   void changeBottom(int index) {
     currentIndex.value = index;
@@ -64,5 +56,4 @@ class ShopGet extends GetxController {
       category = Category.fromJson(value.data);
     });
   }
-
 }

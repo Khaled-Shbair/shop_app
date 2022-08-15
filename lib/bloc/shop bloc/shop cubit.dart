@@ -33,25 +33,25 @@ class ShopCubit extends Cubit<ShopState> {
     emit(ChangeBottomNavState());
   }
 
-  void getHomeData() {
-    emit(ShopLoadingState());
-    DioHelper.getData(
-            url: ApiPaths.home, token: PrefController().token, query: null)
-        .then((value) {
-      homeModel = HomeModel.fromJson(value.data);
-      print(listFavorites.toString());
-      for (var element in homeModel.data.products) {
-        listFavorites.addAll(
-          {
-            element.id: element.inFavorites,
-          },
-        );
-      }
-      emit(ShopSuccessState());
-    }).catchError((error) {
-      emit(ShopErrorState());
-    });
-  }
+// void getHomeData() {
+//   emit(ShopLoadingState());
+//   DioHelper.getData(
+//           url: ApiPaths.home, token: PrefController().token, query: null)
+//       .then((value) {
+//     homeModel = HomeModel.fromJson(value.data);
+//     print(listFavorites.toString());
+//     for (var element in homeModel.data.products) {
+//       listFavorites.addAll(
+//         {
+//           element.id: element.inFavorites,
+//         },
+//       );
+//     }
+//     emit(ShopSuccessState());
+//   }).catchError((error) {
+//     emit(ShopErrorState());
+//   });
+// }
 
   late Category category;
 

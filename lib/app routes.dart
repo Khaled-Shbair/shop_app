@@ -36,12 +36,12 @@ class AppRouters {
       case registerScreen:
         return MaterialPageRoute(builder: (context) => const RegisterScreen());
       default:
-       // if (_onBoarding) {
-       //   if (_token.isNotEmpty) {
-       //     return MaterialPageRoute(builder: (context) => const ShopLayout());
-       //   }
-       //   return MaterialPageRoute(builder: (context) => const LoginScreen());
-       // }
+        if (_onBoarding) {
+          if (_token.isNotEmpty) {
+            return MaterialPageRoute(builder: (context) => const ShopLayout());
+          }
+          return MaterialPageRoute(builder: (context) => const LoginScreen());
+        }
         return MaterialPageRoute(
             builder: (context) => const OnBoardingScreen());
     }

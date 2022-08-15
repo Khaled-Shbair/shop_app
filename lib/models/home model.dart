@@ -1,11 +1,10 @@
 class HomeModel {
   late bool status;
   late Data data;
-
+  HomeModel(this.status,this.data);
   HomeModel.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     data = Data.fromJson(json['data']);
-    //  data = json['data'] != null ? Data.fromJson(json['data']) : null;
   }
 }
 
@@ -28,14 +27,10 @@ class Data {
 class Banners {
   late int id;
   late String image;
- // Null category;
-  //Null product;
 
   Banners.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     image = json['image'];
-    //category = json['category'];
-    //product = json['product'];
   }
 }
 
@@ -48,8 +43,7 @@ class Products {
   late String name;
   late bool inFavorites;
   late bool inCart;
-  //late String description;
-  //late List<String> images;
+
   Products.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     price = json['price'];
@@ -59,7 +53,5 @@ class Products {
     name = json['name'];
     inFavorites = json['in_favorites'];
     inCart = json['in_cart'];
-   // description = json['description'];
-   // images = json['images'].cast<String>();
   }
 }
