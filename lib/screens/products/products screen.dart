@@ -11,21 +11,21 @@ class ProductsScreen extends StatefulWidget {
 }
 
 class _ProductsScreenState extends State<ProductsScreen> {
-  ShopGet shopGet = Get.put(ShopGet());
+  final ShopGet _shopGet = Get.put(ShopGet());
 
   @override
   Widget build(BuildContext context) {
     return GetX<ShopGet>(
       global: true,
       builder: (controller) {
-        if (controller.loading.isTrue) {
+        if (_shopGet.loading.isTrue) {
           return const Center(child: CircularProgressIndicator());
         }
         return Scaffold(
           body: ListView(
             children: [
               CarouselSlider(
-                items: controller.homeModel.data.banners.map((e) {
+                items: _shopGet.homeModel.data.banners.map((e) {
                   return Image(
                     image: NetworkImage(e.image),
                     width: double.infinity,
@@ -66,7 +66,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
                           alignment: AlignmentDirectional.bottomCenter,
                           children: [
                             Image(
-                              image: NetworkImage(controller
+                              image: NetworkImage(_shopGet
                                   .category.dataCategory.data[index].image),
                               height: 100,
                               width: 100,
@@ -75,8 +75,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
                               color: Colors.black.withOpacity(.8),
                               width: 100,
                               child: Text(
-                                controller
-                                    .category.dataCategory.data[index].name,
+                                _shopGet.category.dataCategory.data[index].name,
                                 overflow: TextOverflow.ellipsis,
                                 textAlign: TextAlign.center,
                                 maxLines: 1,
@@ -90,7 +89,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
                       },
                       separatorBuilder: (context, index) =>
                           const SizedBox(width: 10),
-                      itemCount: controller.category.dataCategory.data.length,
+                      itemCount: _shopGet.category.dataCategory.data.length,
                     ),
                   ),
                   const SizedBox(height: 10),
@@ -98,7 +97,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
                     'New Products',
                     style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                   ),
-                  listProduct(controller),
+                  listProduct(_shopGet),
                 ],
               ),
             ],

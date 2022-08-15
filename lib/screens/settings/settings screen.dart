@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:shop_app/api/api%20response.dart';
 import 'package:shop_app/api/auth%20api%20controller.dart';
 import 'package:shop_app/constants/string.dart';
 import 'package:shop_app/utils/helpers.dart';
-import '../../bloc/shop bloc/setting get.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({Key? key}) : super(key: key);
@@ -17,7 +15,6 @@ class _SettingsScreenState extends State<SettingsScreen> with helpers {
   late TextEditingController _nameController;
   late TextEditingController _emailController;
   late TextEditingController _phoneController;
-  SettingGet settingGet = Get.put(SettingGet());
 
   @override
   void initState() {
@@ -39,16 +36,18 @@ class _SettingsScreenState extends State<SettingsScreen> with helpers {
   Widget build(BuildContext context) {
     return Center(
       child: ElevatedButton(
-        onPressed: () => _logout,
+        onPressed: ()async =>await _logout(),
         child: const Text('LOGOUT'),
       ),
     );
   }
 
   Future<void> _logout() async {
-    ApiResponse apiResponse = await AuthApiController.to.logout();
+    ApiResponse apiResponse = await AuthApiController().logout();
+    print('befor');
+    showSnackBar(message: apiResponse.message, error: apiResponse.status);
     if (apiResponse.status) {
-      showSnackBar(message: apiResponse.message, error: apiResponse.status);
+      print('after');
       navigator();
     }
   }

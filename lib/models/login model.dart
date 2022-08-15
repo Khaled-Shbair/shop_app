@@ -8,12 +8,12 @@ class LoginModel {
   LoginModel.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     message = json['message'];
-    data = json['data'] != null ? Data.fromJson(json['data']) : null;
-   //if (json['data'] != null) {
-   //  json['data'].forEach((jsonObjectMap) {
-   //    data.add(Data.fromJson(jsonObjectMap));
-   //  });
-   //}
+   // data = json['data'] != null ? Data.fromJson(json['data']) : null;
+ //if (json['data'] != null) {
+ //  json['data'].forEach((jsonObjectMap) {
+ //    data.add(Data.fromJson(jsonObjectMap));
+ //  });
+ //}
   }
 }
 
