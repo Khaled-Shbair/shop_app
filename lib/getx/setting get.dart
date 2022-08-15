@@ -1,9 +1,9 @@
 import 'package:get/get.dart';
 
-import '../../api/api paths.dart';
-import '../../api/dio helper.dart';
-import '../../models/login model.dart';
-import '../../shared preferences/pref controller.dart';
+import '../api/api paths.dart';
+import '../api/dio helper.dart';
+import '../models/login model.dart';
+import '../shared preferences/pref controller.dart';
 
 class SettingGet extends GetxController {
   static SettingGet get to => Get.find();

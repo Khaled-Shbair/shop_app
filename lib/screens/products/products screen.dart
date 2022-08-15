@@ -1,7 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:shop_app/bloc/shop%20bloc/shop%20get.dart';
+import '../../getx/shop get.dart';
 
 class ProductsScreen extends StatefulWidget {
   const ProductsScreen({Key? key}) : super(key: key);
@@ -21,6 +21,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
         if (_shopGet.loading.isTrue) {
           return const Center(child: CircularProgressIndicator());
         }
+
         return Scaffold(
           body: ListView(
             children: [

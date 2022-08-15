@@ -26,23 +26,14 @@ class PrefController {
     _preferences = await SharedPreferences.getInstance();
   }
 
-//Future<void> saveDataLogin({required Data value}) async {
-//  await _preferences.setBool(Keys.loggedIn.toString(), true);
-//  await _preferences.setString(Keys.token.toString(), value.token);
-//  await _preferences.setString(Keys.name.toString(), value.name);
-//  await _preferences.setString(Keys.phone.toString(), value.phone);
-//  await _preferences.setString(Keys.email.toString(), value.email);
-//  await _preferences.setInt(Keys.id.toString(), value.id);
-//}
-
- Future<void> saveDataLogin({required LoginModel value}) async {
-   await _preferences.setBool(Keys.loggedIn.toString(), true);
-   await _preferences.setString(Keys.token.toString(), value.data!.token);
-   await _preferences.setString(Keys.name.toString(), value.data!.name);
-   await _preferences.setString(Keys.phone.toString(), value.data!.phone);
-   await _preferences.setString(Keys.email.toString(), value.data!.email);
-   await _preferences.setInt(Keys.id.toString(), value.data!.id);
- }
+  Future<void> saveDataLogin({required LoginModel value}) async {
+    await _preferences.setBool(Keys.loggedIn.toString(), true);
+    await _preferences.setString(Keys.token.toString(), value.data!.token);
+    await _preferences.setString(Keys.name.toString(), value.data!.name);
+    await _preferences.setString(Keys.phone.toString(), value.data!.phone);
+    await _preferences.setString(Keys.email.toString(), value.data!.email);
+    await _preferences.setInt(Keys.id.toString(), value.data!.id);
+  }
 
   bool get loggedIn => _preferences.getBool(Keys.loggedIn.toString()) ?? false;
 

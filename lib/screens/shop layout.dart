@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:shop_app/bloc/shop%20bloc/shop%20get.dart';
 import 'package:shop_app/constants/string.dart';
+
+import '../getx/shop get.dart';
 
 class ShopLayout extends StatefulWidget {
   const ShopLayout({Key? key}) : super(key: key);
