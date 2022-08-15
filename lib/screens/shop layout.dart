@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shop_app/bloc/shop%20bloc/shop%20cubit.dart';
-import 'package:shop_app/bloc/shop%20bloc/shop%20states.dart';
+import 'package:get/get.dart';
+import 'package:shop_app/bloc/shop%20bloc/shop%20get.dart';
 import 'package:shop_app/constants/string.dart';
 
 class ShopLayout extends StatefulWidget {
@@ -11,6 +10,60 @@ class ShopLayout extends StatefulWidget {
   State<ShopLayout> createState() => _ShopLayoutState();
 }
 
+class _ShopLayoutState extends State<ShopLayout> {
+  final ShopGet shopGet = Get.put(ShopGet());
+
+  @override
+  Widget build(BuildContext context) {
+    return GetX<ShopGet>(
+      builder: (controller) {
+        if (controller.loading.isTrue) {
+          return const Center(child: CircularProgressIndicator());
+        }
+        return Scaffold(
+          backgroundColor: Colors.white,
+          appBar: AppBar(
+            elevation: 0,
+            backgroundColor: Colors.transparent,
+            title: const Text(
+              'Salla',
+              style: TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            actions: [
+              IconButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, searchScreen);
+                },
+                icon: const Icon(Icons.search, color: Colors.black),
+              ),
+            ],
+          ),
+          body: controller.bottomScreen[controller.currentIndex.value],
+          bottomNavigationBar: BottomNavigationBar(
+            onTap: (index) => shopGet.changeBottom(index),
+            currentIndex: controller.currentIndex.value,
+            selectedItemColor: Colors.red,
+            unselectedItemColor: Colors.grey,
+            items: const [
+              BottomNavigationBarItem(icon: Icon(Icons.home), label: 'home'),
+              BottomNavigationBarItem(
+                  icon: Icon(Icons.category), label: 'category'),
+              BottomNavigationBarItem(
+                  icon: Icon(Icons.favorite), label: 'favorite'),
+              BottomNavigationBarItem(
+                  icon: Icon(Icons.settings), label: 'settings'),
+            ],
+          ),
+        );
+      },
+    );
+  }
+}
+
+/*
 class _ShopLayoutState extends State<ShopLayout> {
   @override
   Widget build(BuildContext context) {
@@ -52,9 +105,9 @@ class _ShopLayoutState extends State<ShopLayout> {
               BottomNavigationBarItem(
                   icon: Icon(Icons.category), label: 'category'),
               BottomNavigationBarItem(
-                  icon: Icon(Icons.settings), label: 'settings'),
-              BottomNavigationBarItem(
                   icon: Icon(Icons.favorite), label: 'favorite'),
+              BottomNavigationBarItem(
+                  icon: Icon(Icons.settings), label: 'settings'),
             ],
           ),
         );
@@ -62,3 +115,4 @@ class _ShopLayoutState extends State<ShopLayout> {
     );
   }
 }
+*/

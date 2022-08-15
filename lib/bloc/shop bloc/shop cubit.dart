@@ -3,6 +3,7 @@ import 'package:shop_app/api/api%20paths.dart';
 import 'package:shop_app/api/dio%20helper.dart';
 import 'package:shop_app/bloc/shop%20bloc/shop%20states.dart';
 import 'package:flutter/material.dart';
+import 'package:shop_app/models/login%20model.dart';
 import 'package:shop_app/screens/categories/categories%20screen.dart';
 import 'package:shop_app/screens/favorites/favorites%20screen.dart';
 import 'package:shop_app/screens/products/products%20screen.dart';
@@ -18,13 +19,14 @@ class ShopCubit extends Cubit<ShopState> {
   ShopCubit get(context) => BlocProvider.of(context);
   int currentIndex = 0;
   late HomeModel homeModel;
-  late Category category;
   final List<Widget> bottomScreen = const [
     ProductsScreen(),
     CategoriesScreen(),
-    SettingsScreen(),
     FavoritesScreen(),
+    SettingsScreen(),
   ];
+
+  Map<int, bool> listFavorites = {};
 
   void changeBottom(int index) {
     currentIndex = index;
@@ -37,23 +39,45 @@ class ShopCubit extends Cubit<ShopState> {
             url: ApiPaths.home, token: PrefController().token, query: null)
         .then((value) {
       homeModel = HomeModel.fromJson(value.data);
+      print(listFavorites.toString());
+      for (var element in homeModel.data.products) {
+        listFavorites.addAll(
+          {
+            element.id: element.inFavorites,
+          },
+        );
+      }
       emit(ShopSuccessState());
     }).catchError((error) {
       emit(ShopErrorState());
     });
   }
 
+  late Category category;
+
   void getCategoryData() {
-    emit(ShopLoadingState());
-    DioHelper.getData(
-            url: ApiPaths.categories,
-            token: PrefController().token,
-            query: null)
-        .then((value) {
+    emit(CategoryLoadingState());
+    DioHelper.getData(url: ApiPaths.categories, query: null).then((value) {
       category = Category.fromJson(value.data);
       emit(CategoriesSuccessState());
     }).catchError((error) {
       emit(CategoriesErrorState());
+    });
+  }
+
+  late LoginModel user;
+
+  void getProfileData() {
+    emit(ProfileLoadingState());
+    DioHelper.getData(
+      url: ApiPaths.profile,
+      token: PrefController().token,
+      query: null,
+    ).then((value) {
+      user = LoginModel.fromJson(value.data);
+      emit(ProfileSuccessState(user));
+    }).catchError((error) {
+      emit(ProfileErrorState());
     });
   }
 }

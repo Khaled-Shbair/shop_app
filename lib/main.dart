@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shop_app/bloc/shop%20bloc/shop%20cubit.dart';
-
+import 'package:shop_app/screens/login/login%20screen.dart';
+import 'package:shop_app/screens/register/register%20screen.dart';
 import 'api/dio helper.dart';
 import 'app routes.dart';
 import 'shared preferences/pref controller.dart';
@@ -20,18 +19,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider(
-          create: (context) => ShopCubit()
-            ..getHomeData()
-            ..getCategoryData(),
-        ),
-      ],
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        onGenerateRoute: appRoutes.onGenerateRoute,
-      ),
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      onGenerateRoute: appRoutes.onGenerateRoute,
     );
   }
 }
