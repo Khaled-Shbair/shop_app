@@ -15,24 +15,25 @@ class ShopGet extends GetxController {
   RxBool loading = false.obs;
   RxInt currentIndex = 0.obs;
   final RxMap<int, bool> listFavorites = <int, bool>{}.obs;
-  late Category category;
   final RxList<Widget> bottomScreen = const [
     ProductsScreen(),
     CategoriesScreen(),
     FavoritesScreen(),
     SettingsScreen(),
   ].obs;
-@override
-  void onInit() {
-    // TODO: implement onInit
-    super.onInit();
+  HomeModel? homeModel;
+  Category? category;
+
+  @override
+  void onReady() {
+    super.onReady();
+    getHomeData();
   }
 
   void changeBottom(int index) {
     currentIndex.value = index;
   }
 
-  late HomeModel homeModel;
   Future<void> getHomeData() async {
     loading.value = true;
     await DioHelper.getData(
@@ -40,15 +41,15 @@ class ShopGet extends GetxController {
       token: PrefController().token,
       query: null,
     ).then((value) {
-      loading.value = false;
       homeModel = HomeModel.fromJson(value.data);
-     //for (var element in homeModel.data.products) {
-     //  listFavorites.addAll(
-     //    {
-     //      element.id: element.inFavorites,
-     //    },
-     //  );
-     //}
+      loading.value = false;
+      // for (var element in homeModel!.data.products) {
+      //   listFavorites.addAll(
+      //     {
+      //       element.id: element.inFavorites,
+      //     },
+      //   );
+      // }
     });
   }
 
@@ -56,8 +57,8 @@ class ShopGet extends GetxController {
     loading.value = true;
     await DioHelper.getData(url: ApiPaths.categories, query: null)
         .then((value) {
-      loading.value = false;
       category = Category.fromJson(value.data);
+      loading.value = false;
     });
   }
 }

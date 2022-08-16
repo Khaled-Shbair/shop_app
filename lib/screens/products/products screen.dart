@@ -16,89 +16,25 @@ class _ProductsScreenState extends State<ProductsScreen> {
   @override
   Widget build(BuildContext context) {
     return GetX<ShopGet>(
-      global: true,
       builder: (controller) {
         if (_shopGet.loading.isTrue) {
           return const Center(child: CircularProgressIndicator());
         }
-
         return Scaffold(
           body: ListView(
             children: [
-              CarouselSlider(
-                items: _shopGet.homeModel.data.banners.map((e) {
-                  return Image(
-                    image: NetworkImage(e.image),
-                    width: double.infinity,
-                    fit: BoxFit.cover,
-                  );
-                }).toList(),
-                options: CarouselOptions(
-                    height: 250,
-                    initialPage: 0,
-                    enableInfiniteScroll: true,
-                    reverse: false,
-                    autoPlay: true,
-                    autoPlayInterval: const Duration(seconds: 3),
-                    autoPlayAnimationDuration: const Duration(seconds: 1),
-                    autoPlayCurve: Curves.fastOutSlowIn,
-                    scrollDirection: Axis.horizontal,
-                    viewportFraction: 1),
-              ),
-              const SizedBox(height: 10),
+              carouselSlider(),
+              sizeBox(10),
               ListView(
                 physics: const NeverScrollableScrollPhysics(),
                 padding: const EdgeInsetsDirectional.only(start: 5, end: 5),
                 shrinkWrap: true,
                 children: [
-                  const Text(
-                    'Categories',
-                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                  ),
-                  Container(
-                    margin: const EdgeInsetsDirectional.only(top: 5, bottom: 5),
-                    height: 100,
-                    child: ListView.separated(
-                      scrollDirection: Axis.horizontal,
-                      physics: const BouncingScrollPhysics(),
-                      shrinkWrap: true,
-                      itemBuilder: (context, index) {
-                        return Stack(
-                          alignment: AlignmentDirectional.bottomCenter,
-                          children: [
-                            Image(
-                              image: NetworkImage(_shopGet
-                                  .category.dataCategory.data[index].image),
-                              height: 100,
-                              width: 100,
-                            ),
-                            Container(
-                              color: Colors.black.withOpacity(.8),
-                              width: 100,
-                              child: Text(
-                                _shopGet.category.dataCategory.data[index].name,
-                                overflow: TextOverflow.ellipsis,
-                                textAlign: TextAlign.center,
-                                maxLines: 1,
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                ),
-                              ),
-                            ),
-                          ],
-                        );
-                      },
-                      separatorBuilder: (context, index) =>
-                          const SizedBox(width: 10),
-                      itemCount: _shopGet.category.dataCategory.data.length,
-                    ),
-                  ),
-                  const SizedBox(height: 10),
-                  const Text(
-                    'New Products',
-                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                  ),
-                  listProduct(_shopGet),
+                  titleCategory(),
+                  listCategory(),
+                  sizeBox(10),
+                  titleProduct(),
+                  listProduct(),
                 ],
               ),
             ],
@@ -108,12 +44,89 @@ class _ProductsScreenState extends State<ProductsScreen> {
     );
   }
 
-  Widget listProduct(ShopGet cubit) {
+  Widget carouselSlider() {
+    return CarouselSlider(
+      items: _shopGet.homeModel!.data.banners.map((e) {
+        return Image(
+          image: NetworkImage(e.image),
+          width: double.infinity,
+          fit: BoxFit.cover,
+        );
+      }).toList(),
+      options: CarouselOptions(
+          height: 250,
+          initialPage: 0,
+          enableInfiniteScroll: true,
+          reverse: false,
+          autoPlay: true,
+          autoPlayInterval: const Duration(seconds: 3),
+          autoPlayAnimationDuration: const Duration(seconds: 1),
+          autoPlayCurve: Curves.fastOutSlowIn,
+          scrollDirection: Axis.horizontal,
+          viewportFraction: 1),
+    );
+  }
+
+  Widget titleCategory() {
+    return const Text(
+      'Categories',
+      style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+    );
+  }
+
+  Widget listCategory() {
+    return Container(
+      margin: const EdgeInsetsDirectional.only(top: 5, bottom: 5),
+      height: 100,
+      child: ListView.separated(
+        scrollDirection: Axis.horizontal,
+        physics: const BouncingScrollPhysics(),
+        shrinkWrap: true,
+        itemBuilder: (context, index) {
+          return Stack(
+            alignment: AlignmentDirectional.bottomCenter,
+            children: [
+              Image(
+                image: NetworkImage(
+                    _shopGet.category!.dataCategory.data[index].image),
+                height: 100,
+                width: 100,
+              ),
+              Container(
+                color: Colors.black.withOpacity(.8),
+                width: 100,
+                child: Text(
+                  _shopGet.category!.dataCategory.data[index].name,
+                  overflow: TextOverflow.ellipsis,
+                  textAlign: TextAlign.center,
+                  maxLines: 1,
+                  style: const TextStyle(
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ],
+          );
+        },
+        separatorBuilder: (context, index) => const SizedBox(width: 10),
+        itemCount: _shopGet.category!.dataCategory.data.length,
+      ),
+    );
+  }
+
+  Widget titleProduct() {
+    return const Text(
+      'New Products',
+      style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+    );
+  }
+
+  Widget listProduct() {
     return GridView.builder(
       padding: const EdgeInsetsDirectional.only(start: 10, end: 10),
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      itemCount: cubit.homeModel.data.products.length,
+      itemCount: _shopGet.homeModel!.data.products.length,
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
         mainAxisSpacing: 10,
@@ -131,12 +144,12 @@ class _ProductsScreenState extends State<ProductsScreen> {
                 children: [
                   Image(
                     image: NetworkImage(
-                      cubit.homeModel.data.products[index].image,
+                      _shopGet.homeModel!.data.products[index].image,
                     ),
                     width: double.infinity,
                     height: 200,
                   ),
-                  if (cubit.homeModel.data.products[index].discount != 0)
+                  if (_shopGet.homeModel!.data.products[index].discount != 0)
                     Container(
                       padding:
                           const EdgeInsetsDirectional.only(start: 5, end: 5),
@@ -161,7 +174,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
                 child: Column(
                   children: [
                     Text(
-                      cubit.homeModel.data.products[index].name,
+                      _shopGet.homeModel!.data.products[index].name,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: const TextStyle(
@@ -175,7 +188,8 @@ class _ProductsScreenState extends State<ProductsScreen> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(
-                          cubit.homeModel.data.products[index].price.toString(),
+                          _shopGet.homeModel!.data.products[index].price
+                              .toString(),
                           style: const TextStyle(
                             fontSize: 14,
                             color: Colors.blue,
@@ -183,9 +197,10 @@ class _ProductsScreenState extends State<ProductsScreen> {
                           ),
                         ),
                         const SizedBox(width: 10),
-                        if (cubit.homeModel.data.products[index].discount != 0)
+                        if (_shopGet.homeModel!.data.products[index].discount !=
+                            0)
                           Text(
-                            cubit.homeModel.data.products[index].oldPrice
+                            _shopGet.homeModel!.data.products[index].oldPrice
                                 .toString(),
                             style: const TextStyle(
                               fontSize: 12,
@@ -196,7 +211,6 @@ class _ProductsScreenState extends State<ProductsScreen> {
                           ),
                         const Spacer(),
                         IconButton(
-                          // alignment: AlignmentDirectional.topEnd,
                           onPressed: () {},
                           icon: const Icon(
                             Icons.favorite_outline,
@@ -216,4 +230,6 @@ class _ProductsScreenState extends State<ProductsScreen> {
       },
     );
   }
+
+  Widget sizeBox(double height) => SizedBox(height: height);
 }

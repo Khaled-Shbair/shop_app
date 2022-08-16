@@ -3,17 +3,10 @@ class LoginModel {
   late String message;
 
   Data? data;
-  //List<Data> data = <Data>[];
 
   LoginModel.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     message = json['message'];
-   // data = json['data'] != null ? Data.fromJson(json['data']) : null;
- //if (json['data'] != null) {
- //  json['data'].forEach((jsonObjectMap) {
- //    data.add(Data.fromJson(jsonObjectMap));
- //  });
- //}
   }
 }
 

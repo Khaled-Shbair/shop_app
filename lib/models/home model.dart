@@ -1,7 +1,7 @@
 class HomeModel {
   late bool status;
   late Data data;
-  HomeModel(this.status,this.data);
+
   HomeModel.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     data = Data.fromJson(json['data']);
