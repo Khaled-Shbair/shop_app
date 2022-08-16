@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../api/auth api controller.dart';
-import '../../api/api response.dart';
+import '../../getX/auth_api_getX_controller.dart';
+import '../../api/api_response.dart';
 import '../../constants/string.dart';
 import '../../utils/helpers.dart';
 import '../../widgets/input filed.dart';
@@ -18,7 +18,7 @@ class _LoginScreenState extends State<LoginScreen> with helpers {
   late TextEditingController _emailController;
   late TextEditingController _passwordController;
   bool _obscureText = true;
-  final AuthApiController _controller = Get.put(AuthApiController());
+  final AuthApiGetXController _controller = Get.put(AuthApiGetXController());
 
   @override
   void initState() {

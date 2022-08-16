@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:shop_app/api/api%20response.dart';
-import 'package:shop_app/api/auth%20api%20controller.dart';
 import 'package:shop_app/constants/string.dart';
 import 'package:shop_app/utils/helpers.dart';
+import '../../api/api_response.dart';
+import '../../getX/auth_api_getX_controller.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({Key? key}) : super(key: key);
@@ -36,18 +36,16 @@ class _SettingsScreenState extends State<SettingsScreen> with helpers {
   Widget build(BuildContext context) {
     return Center(
       child: ElevatedButton(
-        onPressed: ()async =>await _logout(),
+        onPressed: () async => await _logout(),
         child: const Text('LOGOUT'),
       ),
     );
   }
 
   Future<void> _logout() async {
-    ApiResponse apiResponse = await AuthApiController().logout();
-    print('befor');
-    showSnackBar(message: apiResponse.message, error: apiResponse.status);
+    ApiResponse apiResponse = await AuthApiGetXController().logout();
+    showSnackBar(message: apiResponse.message, error: !apiResponse.status);
     if (apiResponse.status) {
-      print('after');
       navigator();
     }
   }

@@ -1,8 +1,8 @@
-class Category {
+class CategoryModel {
   late bool status;
   late DataCategory dataCategory;
 
-  Category.fromJson(Map<String, dynamic> json) {
+  CategoryModel.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     dataCategory = DataCategory.fromJson(json['data']);
   }

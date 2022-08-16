@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:shop_app/screens/login/login%20screen.dart';
-import 'package:shop_app/screens/register/register%20screen.dart';
-import 'api/dio helper.dart';
+import 'api/dio_settings.dart';
 import 'app routes.dart';
 import 'shared preferences/pref controller.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await PrefController().initPrefController();
-  DioHelper.init();
+  DioSettings.init();
   runApp(MyApp(appRoutes: AppRouters()));
 }
 

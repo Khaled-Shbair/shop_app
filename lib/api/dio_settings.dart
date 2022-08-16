@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
-import 'api paths.dart';
+import 'api_paths.dart';
 
-class DioHelper {
+class DioSettings {
   static late Dio dio;
 
   static init() {
@@ -30,8 +30,8 @@ class DioHelper {
   static Future<Response> postData({
     required String url,
     required Map<String, dynamic> data,
-    String lang = 'en',
     String token = '',
+    String lang = 'en',
   }) async {
     dio.options.headers = {
       'lang': lang,

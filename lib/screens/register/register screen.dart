@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shop_app/utils/helpers.dart';
-
-import '../../api/api response.dart';
-import '../../api/auth api controller.dart';
+import '../../api/api_response.dart';
+import '../../getX/auth_api_getX_controller.dart';
 import '../../widgets/input filed.dart';
 import '../../widgets/password filed.dart';
 
@@ -203,7 +202,7 @@ class _RegisterScreenState extends State<RegisterScreen> with helpers {
   }
 
   Future<void> _register() async {
-    ApiResponse apiResponse = await AuthApiController.to.register(
+    ApiResponse apiResponse = await AuthApiGetXController.to.register(
       phone: _phoneController.text,
       name: _nameController.text,
       email: _emailController.text,

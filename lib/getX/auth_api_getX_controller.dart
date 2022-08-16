@@ -1,17 +1,17 @@
 import 'dart:async';
 import 'package:get/get.dart';
-import 'package:shop_app/api/api response.dart';
-import 'package:shop_app/models/login%20model.dart';
+import 'package:shop_app/api/api_response.dart';
+import '../models/login_model.dart';
 import '../shared preferences/pref controller.dart';
-import 'api paths.dart';
-import 'dio helper.dart';
+import '../api/api_paths.dart';
+import '../api/dio_settings.dart';
 
-class AuthApiController extends GetxController {
-  static AuthApiController get to => Get.find();
+class AuthApiGetXController extends GetxController {
+  static AuthApiGetXController get to => Get.find();
 
   Future<ApiResponse> login(
       {required String email, required String password}) async {
-    var response = await DioHelper.postData(
+    var response = await DioSettings.postData(
       url: ApiPaths.login,
       data: {
         'email': email,
@@ -22,7 +22,8 @@ class AuthApiController extends GetxController {
       if (response.statusCode == 200) {
         LoginModel loginModel = LoginModel.fromJson(response.data);
         if (loginModel.status == true) {
-          PrefController().saveDataLogin(value: loginModel.data!);
+          PrefController().saveLogin(value: true);
+          PrefController().saveToken(token: loginModel.data!.token);
           update();
         }
       }
@@ -43,7 +44,7 @@ class AuthApiController extends GetxController {
     required String name,
     required String phone,
   }) async {
-    var response = await DioHelper.postData(url: ApiPaths.register, data: {
+    var response = await DioSettings.postData(url: ApiPaths.register, data: {
       "name": name,
       "phone": phone,
       "email": email,
@@ -64,13 +65,14 @@ class AuthApiController extends GetxController {
   }
 
   Future<ApiResponse> logout() async {
-    var response = await DioHelper.postData(
+    var response = await DioSettings.postData(
       url: ApiPaths.logout,
       data: {},
       token: PrefController().token,
     );
     if (response.statusCode == 200 || response.statusCode == 401) {
-     // unawaited(PrefController().clear());
+      PrefController().saveLogin(value: false);
+      PrefController().saveToken(token: '');
       return ApiResponse(
           message: response.data['message'], status: response.data['status']);
     }

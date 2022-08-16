@@ -1,16 +1,16 @@
 class LoginModel {
   late bool status;
   late String message;
-
-  Data? data;
+  UserData? data;
 
   LoginModel.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     message = json['message'];
+    data = json['data'] != null ? UserData.fromJson(json['data']) : null;
   }
 }
 
-class Data {
+class UserData {
   late int id;
   late String name;
   late String email;
@@ -20,7 +20,7 @@ class Data {
   late int credit;
   late String token;
 
-  Data.fromJson(Map<String, dynamic> json) {
+  UserData.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
     email = json['email'];
