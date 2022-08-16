@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:shop_app/shared%20preferences/pref%20controller.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../../constants/string.dart';
+import '../../shared preferences/pref_controller.dart';
 import '../../widgets/on boarding widget.dart';
 
 class OnBoardingScreen extends StatefulWidget {

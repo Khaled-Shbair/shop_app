@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:shop_app/screens/on%20boarding/on%20boarding%20screen.dart';
-import 'package:shop_app/screens/register/register%20screen.dart';
-import 'package:shop_app/screens/search/search%20screen.dart';
-import 'package:shop_app/screens/settings/settings%20screen.dart';
 import 'constants/string.dart';
 import 'screens/categories/categories_screen.dart';
 import 'screens/favorites/favorites_screen.dart';
 import 'screens/login/login screen.dart';
+import 'screens/on boarding/on boarding screen.dart';
 import 'screens/products/products screen.dart';
+import 'screens/register/register screen.dart';
+import 'screens/search/search screen.dart';
+import 'screens/settings/settings screen.dart';
 import 'screens/shop layout.dart';
-import 'shared preferences/pref controller.dart';
+import 'shared preferences/pref_controller.dart';
 
 class AppRouters {
   final bool _onBoarding = PrefController().onBoarding;

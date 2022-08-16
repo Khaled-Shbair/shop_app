@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'package:get/get.dart';
-import 'package:shop_app/api/api_response.dart';
+import '../api/api_response.dart';
 import '../models/login_model.dart';
-import '../shared preferences/pref controller.dart';
+import '../shared preferences/pref_controller.dart';
 import '../api/api_paths.dart';
 import '../api/dio_settings.dart';
 

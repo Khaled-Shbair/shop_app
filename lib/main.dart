@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'api/dio_settings.dart';
 import 'app routes.dart';
-import 'shared preferences/pref controller.dart';
+import 'shared preferences/pref_controller.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

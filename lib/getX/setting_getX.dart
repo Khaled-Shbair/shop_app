@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import '../api/api_paths.dart';
 import '../api/dio_settings.dart';
 import '../models/login_model.dart';
-import '../shared preferences/pref controller.dart';
+import '../shared preferences/pref_controller.dart';
 
 /*
   TODO: Remember => Not used yet => (Review late)

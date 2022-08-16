@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+
 import 'api_paths.dart';
 
 class DioSettings {

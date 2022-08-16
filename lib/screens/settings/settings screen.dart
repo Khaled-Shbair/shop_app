@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:shop_app/constants/string.dart';
-import 'package:shop_app/utils/helpers.dart';
+
 import '../../api/api_response.dart';
+import '../../constants/string.dart';
 import '../../getX/auth_api_getX_controller.dart';
+import '../../utils/helpers.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({Key? key}) : super(key: key);

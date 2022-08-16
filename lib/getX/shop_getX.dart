@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:shop_app/screens/categories/categories_screen.dart';
 import '../api/api_paths.dart';
 import '../api/dio_settings.dart';
 import '../models/category_model.dart';
 import '../models/home_model.dart';
+import '../screens/categories/categories_screen.dart';
 import '../screens/favorites/favorites_screen.dart';
 import '../screens/products/products screen.dart';
 import '../screens/settings/settings screen.dart';
-import '../shared preferences/pref controller.dart';
+import '../shared preferences/pref_controller.dart';
 
 class ShopGet extends GetxController {
   static ShopGet get to => Get.find();

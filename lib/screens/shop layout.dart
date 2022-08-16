@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:shop_app/constants/string.dart';
 
+import '../constants/string.dart';
 import '../getX/shop_getX.dart';
 
 
