@@ -21,8 +21,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
         if (_shopGet.loading.isTrue) {
           return const Center(child: CircularProgressIndicator());
         }
-        return Scaffold(
-          body: ListView(
+        return  ListView(
             children: [
               carouselSlider(),
               sizeBox(10),
@@ -39,8 +38,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
                 ],
               ),
             ],
-          ),
-        );
+          );
       },
     );
   }
