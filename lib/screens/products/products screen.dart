@@ -2,7 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../getX/shop_getX.dart';
+import '../../getX/shop_get.dart';
 
 class ProductsScreen extends StatefulWidget {
   const ProductsScreen({Key? key}) : super(key: key);
@@ -47,7 +47,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
 
   Widget carouselSlider() {
     return CarouselSlider(
-      items: _shopGet.homeModel!.data.banners.map((e) {
+      items: _shopGet.homeModel!.data.banner.map((e) {
         return Image(
           image: NetworkImage(e.image),
           width: double.infinity,
@@ -127,7 +127,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
       padding: const EdgeInsetsDirectional.only(start: 10, end: 10),
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      itemCount: _shopGet.homeModel!.data.products.length,
+      itemCount: _shopGet.homeModel!.data.product.length,
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
         mainAxisSpacing: 10,
@@ -145,12 +145,12 @@ class _ProductsScreenState extends State<ProductsScreen> {
                 children: [
                   Image(
                     image: NetworkImage(
-                      _shopGet.homeModel!.data.products[index].image,
+                      _shopGet.homeModel!.data.product[index].image,
                     ),
                     width: double.infinity,
                     height: 200,
                   ),
-                  if (_shopGet.homeModel!.data.products[index].discount != 0)
+                  if (_shopGet.homeModel!.data.product[index].discount != 0)
                     Container(
                       padding:
                           const EdgeInsetsDirectional.only(start: 5, end: 5),
@@ -175,7 +175,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
                 child: Column(
                   children: [
                     Text(
-                      _shopGet.homeModel!.data.products[index].name,
+                      _shopGet.homeModel!.data.product[index].name,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: const TextStyle(
@@ -189,7 +189,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(
-                          _shopGet.homeModel!.data.products[index].price
+                          _shopGet.homeModel!.data.product[index].price
                               .toString(),
                           style: const TextStyle(
                             fontSize: 14,
@@ -198,10 +198,10 @@ class _ProductsScreenState extends State<ProductsScreen> {
                           ),
                         ),
                         const SizedBox(width: 10),
-                        if (_shopGet.homeModel!.data.products[index].discount !=
+                        if (_shopGet.homeModel!.data.product[index].discount !=
                             0)
                           Text(
-                            _shopGet.homeModel!.data.products[index].oldPrice
+                            _shopGet.homeModel!.data.product[index].oldPrice
                                 .toString(),
                             style: const TextStyle(
                               fontSize: 12,

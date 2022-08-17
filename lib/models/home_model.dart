@@ -9,18 +9,14 @@ class HomeModel {
 }
 
 class Data {
-  late List<Banners> banners = [];
-  late List<Products> products = [];
+  late List<Banners> banner = [];
+  late List<Products> product = [];
   late String ad;
 
   Data.fromJson(Map<String, dynamic> json) {
-    json['banners'].forEach((element) {
-      banners.add(Banners.fromJson(element));
-    });
-    json['products'].forEach((element) {
-      products.add(Products.fromJson(element));
-    });
     ad = json['ad'];
+    json['banners'].forEach((data) => banner.add(Banners.fromJson(data)));
+    json['products'].forEach((data) => product.add(Products.fromJson(data)));
   }
 }
 

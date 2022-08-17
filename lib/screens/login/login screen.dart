@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../getX/auth_api_getX_controller.dart';
+import '../../getX/auth_get.dart';
 import '../../api/api_response.dart';
 import '../../constants/string.dart';
 import '../../utils/helpers.dart';

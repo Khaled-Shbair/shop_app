@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../api/api_response.dart';
-import '../../getX/auth_api_getX_controller.dart';
+import '../../getX/auth_get.dart';
 import '../../utils/helpers.dart';
 import '../../widgets/input filed.dart';
 import '../../widgets/password filed.dart';

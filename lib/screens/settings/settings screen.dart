@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../api/api_response.dart';
 import '../../constants/string.dart';
-import '../../getX/auth_api_getX_controller.dart';
+import '../../getX/auth_get.dart';
 import '../../utils/helpers.dart';
 
 class SettingsScreen extends StatefulWidget {
