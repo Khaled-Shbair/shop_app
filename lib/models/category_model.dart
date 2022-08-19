@@ -10,11 +10,14 @@ class CategoryModel {
 
 class DataCategory {
   late int currentPage;
+
   late List<Data> data = [];
 
   DataCategory.fromJson(Map<String, dynamic> json) {
     currentPage = json['current_page'];
-    json['data'].forEach((data) => data.add(Data.fromJson(data)));
+    json['data'].forEach((element) {
+      data.add(Data.fromJson(element));
+    });
   }
 }
 

@@ -1,22 +1,34 @@
 class HomeModel {
   late bool status;
-  late Data data;
+  String? message;
+  Data? data;
 
   HomeModel.fromJson(Map<String, dynamic> json) {
     status = json['status'];
-    data = Data.fromJson(json['data']);
+    message = json['message'];
+    data = json['data'] != null ? Data.fromJson(json['data']) : null;
   }
 }
 
 class Data {
-  late List<Banners> banner = [];
-  late List<Products> product = [];
-  late String ad;
+  List<Banners>? banners;
+  List<Products>? products;
+  String? ad;
 
   Data.fromJson(Map<String, dynamic> json) {
+    if (json['banners'] != null) {
+      json['banners'].forEach((element) {
+        banners = <Banners>[];
+        banners!.add(Banners.fromJson(element));
+      });
+    }
+    if (json['products'] != null) {
+      products = <Products>[];
+      json['products'].forEach((element) {
+        products!.add(Products.fromJson(element));
+      });
+    }
     ad = json['ad'];
-    json['banners'].forEach((data) => banner.add(Banners.fromJson(data)));
-    json['products'].forEach((data) => product.add(Products.fromJson(data)));
   }
 }
 

@@ -8,7 +8,6 @@ import '../screens/categories/categories_screen.dart';
 import '../screens/favorites/favorites_screen.dart';
 import '../screens/products/products screen.dart';
 import '../screens/settings/settings screen.dart';
-import '../shared preferences/pref_controller.dart';
 
 class ShopGet extends GetxController {
   static ShopGet get to => Get.find();
@@ -22,40 +21,57 @@ class ShopGet extends GetxController {
     SettingsScreen(),
   ].obs;
 
-  HomeModel? homeModel;
-  CategoryModel? category;
+  @override
+  void onInit() {
+    super.onInit();
+    getCategoryData();
+    getHomeData();
+  }
 
   void changeBottom(int index) {
     currentIndex.value = index;
   }
 
-  Future<void> getHomeData() async {
-    loading.value = true;
-    await DioSettings.getData(
-      url: ApiPaths.home,
-      token: PrefController().token,
-      query: null,
-    ).then((value) {
-      homeModel = HomeModel.fromJson(value.data);
-      loading.value = false;
+  final _homeModel = Rxn<HomeModel>();
 
-      // TODO: Not User yet => use with favorites screen
-      // for (var element in homeModel!.data.products) {
-      //   listFavorites.addAll(
-      //     {
-      //       element.id: element.inFavorites,
-      //     },
-      //   );
-      // }
-    });
+  HomeModel? get homeModel => _homeModel.value;
+
+  set homeModel(HomeModel? value) {
+    _homeModel.value = value;
   }
 
-  Future<void> getCategoryData() async {
+  void getHomeData() async {
     loading.value = true;
-    await DioSettings.getData(url: ApiPaths.categories, query: null)
-        .then((value) {
-      category = CategoryModel.fromJson(value.data);
+    var response = await DioSettings.getData(url: ApiPaths.home);
+    if (response.statusCode == 200) {
+      homeModel = HomeModel.fromJson(response.data);
       loading.value = false;
-    });
+    }
+  }
+
+// TODO: Not User yet => use with favorites screen
+  // for (var element in homeModel!.data.products) {
+  //   listFavorites.addAll(
+  //     {
+  //       element.id: element.inFavorites,
+  //     },
+  //   );
+  // }
+
+  final _category = Rxn<CategoryModel>();
+
+  CategoryModel? get category => _category.value;
+
+  set category(CategoryModel? value) {
+    _category.value = value;
+  }
+
+  void getCategoryData() async {
+    loading.value = true;
+    var response = await DioSettings.getData(url: ApiPaths.categories);
+    if (response.statusCode == 200) {
+      category = CategoryModel.fromJson(response.data);
+      loading.value = false;
+    }
   }
 }

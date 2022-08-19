@@ -26,8 +26,7 @@ class SettingGet extends GetxController {
     var response;
     response = await DioSettings.getData(
       url: ApiPaths.profile,
-      token: PrefController().token,
-      query: null,
+      query: {},
     ).then((value) {
       loading.value = false;
       var json = response.data;

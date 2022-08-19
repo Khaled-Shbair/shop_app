@@ -21,31 +21,36 @@ class _ProductsScreenState extends State<ProductsScreen> {
         if (_shopGet.loading.isTrue) {
           return const Center(child: CircularProgressIndicator());
         }
-        return  ListView(
-            children: [
-              carouselSlider(),
-              sizeBox(10),
-              ListView(
-                physics: const NeverScrollableScrollPhysics(),
-                padding: const EdgeInsetsDirectional.only(start: 5, end: 5),
-                shrinkWrap: true,
-                children: [
-                  titleCategory(),
-                  listCategory(),
-                  sizeBox(10),
-                  titleProduct(),
-                  listProduct(),
-                ],
-              ),
-            ],
-          );
+        return Scaffold(
+          body: _shopGet.homeModel != null && _shopGet.category != null
+              ? ListView(
+                  children: [
+                    carouselSlider(),
+                    sizeBox(10),
+                    ListView(
+                      physics: const NeverScrollableScrollPhysics(),
+                      padding:
+                          const EdgeInsetsDirectional.only(start: 5, end: 5),
+                      shrinkWrap: true,
+                      children: [
+                        titleCategory(),
+                        listCategory(),
+                        sizeBox(10),
+                        titleProduct(),
+                        listProduct(),
+                      ],
+                    ),
+                  ],
+                )
+              : const Center(child: CircularProgressIndicator()),
+        );
       },
     );
   }
 
   Widget carouselSlider() {
     return CarouselSlider(
-      items: _shopGet.homeModel!.data.banner.map((e) {
+      items: _shopGet.homeModel!.data!.banners!.map((e) {
         return Image(
           image: NetworkImage(e.image),
           width: double.infinity,
@@ -125,7 +130,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
       padding: const EdgeInsetsDirectional.only(start: 10, end: 10),
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      itemCount: _shopGet.homeModel!.data.product.length,
+      itemCount: _shopGet.homeModel!.data!.products!.length,
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
         mainAxisSpacing: 10,
@@ -143,12 +148,12 @@ class _ProductsScreenState extends State<ProductsScreen> {
                 children: [
                   Image(
                     image: NetworkImage(
-                      _shopGet.homeModel!.data.product[index].image,
+                      _shopGet.homeModel!.data!.products![index].image,
                     ),
                     width: double.infinity,
                     height: 200,
                   ),
-                  if (_shopGet.homeModel!.data.product[index].discount != 0)
+                  if (_shopGet.homeModel!.data!.products![index].discount != 0)
                     Container(
                       padding:
                           const EdgeInsetsDirectional.only(start: 5, end: 5),
@@ -173,7 +178,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
                 child: Column(
                   children: [
                     Text(
-                      _shopGet.homeModel!.data.product[index].name,
+                      _shopGet.homeModel!.data!.products![index].name,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: const TextStyle(
@@ -187,7 +192,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(
-                          _shopGet.homeModel!.data.product[index].price
+                          _shopGet.homeModel!.data!.products![index].price
                               .toString(),
                           style: const TextStyle(
                             fontSize: 14,
@@ -196,10 +201,11 @@ class _ProductsScreenState extends State<ProductsScreen> {
                           ),
                         ),
                         const SizedBox(width: 10),
-                        if (_shopGet.homeModel!.data.product[index].discount !=
+                        if (_shopGet
+                                .homeModel!.data!.products![index].discount !=
                             0)
                           Text(
-                            _shopGet.homeModel!.data.product[index].oldPrice
+                            _shopGet.homeModel!.data!.products![index].oldPrice
                                 .toString(),
                             style: const TextStyle(
                               fontSize: 12,

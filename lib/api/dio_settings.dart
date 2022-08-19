@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:shop_app/shared%20preferences/pref_controller.dart';
 
 import 'api_paths.dart';
 
@@ -16,21 +17,21 @@ class DioSettings {
 
   static Future<Response> getData({
     required String url,
-    required Map<String, dynamic>? query,
-    String token = '',
+    Map<String, dynamic>? query,
     String lang = 'en',
   }) async {
     dio.options.headers = {
       'lang': lang,
       'Content-Type': 'application/json',
-      'Authorization': token,
+      'Authorization': PrefController().token,
     };
     return await dio.get(url, queryParameters: query);
   }
 
   static Future<Response> postData({
     required String url,
-    required Map<String, dynamic> data,
+    required Map<String, dynamic>? data,
+    Map<String, dynamic>? query,
     String token = '',
     String lang = 'en',
   }) async {
@@ -39,6 +40,10 @@ class DioSettings {
       'Content-Type': 'application/json',
       'Authorization': token,
     };
-    return await dio.post(url, data: data);
+    return await dio.post(
+      url,
+      data: data,
+      queryParameters: query,
+    );
   }
 }
