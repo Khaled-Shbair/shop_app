@@ -30,15 +30,14 @@ class DioSettings {
 
   static Future<Response> postData({
     required String url,
-    required Map<String, dynamic>? data,
+    Map<String, dynamic>? data,
     Map<String, dynamic>? query,
-    String token = '',
     String lang = 'en',
   }) async {
     dio.options.headers = {
       'lang': lang,
       'Content-Type': 'application/json',
-      'Authorization': token,
+      'Authorization': PrefController().token,
     };
     return await dio.post(
       url,

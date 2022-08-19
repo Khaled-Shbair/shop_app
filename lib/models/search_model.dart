@@ -1,16 +1,18 @@
 class SearchModel {
   late bool status;
+  String? message;
   Data? data;
 
   SearchModel.fromJson(Map<String, dynamic> json) {
     status = json['status'];
+    message = json['message'];
     data = json['data'] != null ? Data.fromJson(json['data']) : null;
   }
 }
 
 class Data {
   late int currentPage;
-  late List<Product> data = [];
+  List<Product>? data;
   late String firstPageUrl;
   late int from;
   late int lastPage;
@@ -23,8 +25,13 @@ class Data {
   late int total;
 
   Data.fromJson(Map<String, dynamic> json) {
+    if (json['data'] != null) {
+      data = <Product>[];
+      json['data'].forEach((v) {
+        data!.add(Product.fromJson(v));
+      });
+    }
     currentPage = json['current_page'];
-    json['data'].forEach((data) => data.add(Product.fromJson(data)));
     firstPageUrl = json['first_page_url'];
     from = json['from'];
     lastPage = json['last_page'];
@@ -42,7 +49,7 @@ class Product {
   late int id;
   late dynamic price;
   late dynamic oldPrice;
-  late int discount;
+  int? discount;
   late String image;
   late String name;
   late String description;

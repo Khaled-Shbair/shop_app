@@ -42,16 +42,10 @@ class _SearchScreenState extends State<SearchScreen> {
             return const Center(child: CircularProgressIndicator());
           }
           return ListView(
-            padding: const EdgeInsetsDirectional.all(20),
-            physics: const NeverScrollableScrollPhysics(),
+            padding: const EdgeInsetsDirectional.all(40),
             children: [
-              InputFiled(
-                prefixIcon: Icons.search,
-                controller: _searchController,
-                hintText: 'Enter text to search',
-                keyboard: TextInputType.text,
-              ),
-              const SizedBox(height: 20),
+              searchField(),
+              const SizedBox(height: 40),
               list(),
             ],
           );
@@ -60,111 +54,124 @@ class _SearchScreenState extends State<SearchScreen> {
     );
   }
 
-  Widget list() {
-    return ListView.separated(
-      physics: const NeverScrollableScrollPhysics(),
-      shrinkWrap: true,
-      itemBuilder: (context, index) {
-        return SizedBox(
-          height: 120,
-          child: Row(
-            children: [
-              Expanded(
-                child: Stack(
-                  alignment: AlignmentDirectional.bottomStart,
-                  children: [
-                    Container(
-                      padding:
-                          const EdgeInsetsDirectional.only(start: 5, end: 5),
-                      color: Colors.red,
-                      child: const Text(
-                        'DISCOUNT',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 10,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                    Image(
-                      image: NetworkImage(
-                        _searchGet.searchModel!.data!.data[index].image,
-                      ),
-                      width: 120,
-                      height: 120,
-                    ),
-                  ],
-                ),
-              ),
-              Expanded(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Name',
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(
-                        fontSize: 14,
-                        height: 1.3,
-                        color: Colors.black,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                    Spacer(),
-                    Row(
-                      children: [
-                        Text(
-                          'price',
-                          style: const TextStyle(
-                            fontSize: 14,
-                            color: Colors.blue,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        const SizedBox(width: 10),
-                        // if (_shopGet.homeModel!.data.products[index].discount !=
-                        //     0)
-                        Text(
-                          'Title',
-                          style: const TextStyle(
-                            fontSize: 12,
-                            color: Colors.grey,
-                            fontWeight: FontWeight.bold,
-                            decoration: TextDecoration.lineThrough,
-                          ),
-                        ),
-                        const Spacer(),
-                        CircleAvatar(
-                          radius: 15,
-                          child: IconButton(
-                            onPressed: () {},
-                            icon: const Icon(
-                              Icons.favorite_outline,
-                              color: Colors.grey,
-                              size: 15,
-                            ),
-                            padding: EdgeInsetsDirectional.zero,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        );
-      },
-      separatorBuilder: (context, index) {
-        return const Divider(
-          color: Colors.grey,
-          indent: 20,
-          endIndent: 20,
-          thickness: 2,
-        );
-      },
-      itemCount: 10,
+  Widget searchField() {
+    return TextField(
+      controller: _searchController,
+      keyboardType: TextInputType.text,
+      onSubmitted: (value) => _searchGet.search(value),
+      decoration: InputDecoration(
+        hintText: 'Enter text to search',
+        prefixIcon: const Icon(Icons.search),
+        helperStyle: const TextStyle(color: Colors.grey),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(50),
+        ),
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(50),
+          borderSide: const BorderSide(color: Colors.red),
+        ),
+      ),
     );
+  }
+
+  Widget list() {
+    if (_searchGet.searchModel != null) {
+      return ListView.separated(
+        physics: const NeverScrollableScrollPhysics(),
+        shrinkWrap: true,
+        itemBuilder: (context, index) {
+          return SizedBox(
+            height: 120,
+            child: Row(
+              children: [
+                Expanded(
+                  child: Stack(
+                    alignment: AlignmentDirectional.bottomStart,
+                    children: [
+                      Image(
+                        image: NetworkImage(
+                          _searchGet.searchModel!.data!.data![index].image,
+                        ),
+                        width: 120,
+                        height: 120,
+                      ),
+                      Container(
+                        padding:
+                            const EdgeInsetsDirectional.only(start: 5, end: 5),
+                        color: Colors.red,
+                        child: const Text(
+                          'DISCOUNT',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 10,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Expanded(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Text(
+                        _searchGet.searchModel!.data!.data![index].name,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                          fontSize: 14,
+                          height: 1.3,
+                          color: Colors.black,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      const Spacer(),
+                      Row(
+                        children: [
+                          Text(
+                            _searchGet.searchModel!.data!.data![index].price
+                                .toString(),
+                            style: const TextStyle(
+                              fontSize: 14,
+                              color: Colors.blue,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          const SizedBox(width: 10),
+                          const Spacer(),
+                          CircleAvatar(
+                            radius: 15,
+                            child: IconButton(
+                              onPressed: () {},
+                              icon: const Icon(
+                                Icons.favorite_outline,
+                                color: Colors.grey,
+                                size: 15,
+                              ),
+                              padding: EdgeInsetsDirectional.zero,
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 10),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          );
+        },
+        separatorBuilder: (context, index) {
+          return const Divider(
+            color: Colors.grey,
+            thickness: 2,
+          );
+        },
+        itemCount: _searchGet.searchModel!.data!.data!.length,
+      );
+    } else {
+      return const Center(child: CircularProgressIndicator());
+    }
   }
 }

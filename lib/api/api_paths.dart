@@ -6,6 +6,7 @@ class ApiPaths {
   static const String profile = 'profile';
   static const String updateProfile = 'update-profile';
   static const String home = 'home';
+  static const String favorites = 'favorites';
   static const String categories = 'categories';
   static const String changePassword = 'change-password';
   static const String productSearch = 'products/search';

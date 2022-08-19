@@ -13,7 +13,6 @@ class ShopGet extends GetxController {
   static ShopGet get to => Get.find();
   RxBool loading = false.obs;
   RxInt currentIndex = 0.obs;
-  final RxMap<int, bool> listFavorites = <int, bool>{}.obs;
   final RxList<Widget> bottomScreen = const [
     ProductsScreen(),
     CategoryScreen(),
@@ -32,6 +31,14 @@ class ShopGet extends GetxController {
     currentIndex.value = index;
   }
 
+  final _listFavorites = RxMap<int, bool>();
+
+  Map<int, bool> get listFavorites => _listFavorites;
+
+  set listFavorites(Map<int, bool> value) {
+    _listFavorites.value = value;
+  }
+
   final _homeModel = Rxn<HomeModel>();
 
   HomeModel? get homeModel => _homeModel.value;
@@ -47,16 +54,23 @@ class ShopGet extends GetxController {
       homeModel = HomeModel.fromJson(response.data);
       loading.value = false;
     }
+    for (var element in homeModel!.data!.products!) {
+      listFavorites.addAll(
+        {element.id: element.inFavorites},
+      );
+    }
+    // print(listFavorites.toString());
   }
 
-// TODO: Not User yet => use with favorites screen
-  // for (var element in homeModel!.data.products) {
-  //   listFavorites.addAll(
-  //     {
-  //       element.id: element.inFavorites,
-  //     },
-  //   );
-  // }
+  void changeFavorites(int productId) async {
+    loading.value = true;
+    await DioSettings.postData(
+      url: ApiPaths.favorites,
+      data: {'product_id': productId},
+    ).then((value) {
+      loading.value = false;
+    });
+  }
 
   final _category = Rxn<CategoryModel>();
 

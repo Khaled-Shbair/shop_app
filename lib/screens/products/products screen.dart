@@ -215,15 +215,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
                             ),
                           ),
                         const Spacer(),
-                        IconButton(
-                          onPressed: () {},
-                          icon: const Icon(
-                            Icons.favorite_outline,
-                            color: Colors.grey,
-                            size: 15,
-                          ),
-                          padding: EdgeInsetsDirectional.zero,
-                        ),
+                        iconFavorite(index),
                       ],
                     ),
                   ],
@@ -234,6 +226,30 @@ class _ProductsScreenState extends State<ProductsScreen> {
         );
       },
     );
+  }
+
+  Widget iconFavorite(int index) {
+    if (_shopGet.homeModel != null) {
+      return CircleAvatar(
+        backgroundColor: _shopGet.homeModel!.data!.products![index].inFavorites
+            // backgroundColor: _shopGet.listFavorites[index]!
+            ? Colors.red
+            : Colors.grey,
+        child: IconButton(
+          onPressed: () {
+            print(_shopGet.homeModel!.data!.products![index].id);
+          },
+          icon: const Icon(
+            Icons.favorite_outline,
+            color: Colors.white,
+            size: 15,
+          ),
+          padding: EdgeInsetsDirectional.zero,
+        ),
+      );
+    } else {
+      return Text('null');
+    }
   }
 
   Widget sizeBox(double height) => SizedBox(height: height);

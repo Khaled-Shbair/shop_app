@@ -65,11 +65,7 @@ class AuthApiGetXController extends GetxController {
   }
 
   Future<ApiResponse> logout() async {
-    var response = await DioSettings.postData(
-      url: ApiPaths.logout,
-      data: {},
-      token: PrefController().token,
-    );
+    var response = await DioSettings.postData(url: ApiPaths.logout);
     if (response.statusCode == 200 || response.statusCode == 401) {
       PrefController().saveLogin(value: false);
       PrefController().saveToken(token: '');
